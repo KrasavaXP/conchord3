@@ -1,0 +1,295 @@
+[
+  {
+    "id": "cc3973e4-e156-41e1-a7d9-125453e49179",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "timestamp": "2025-08-16T04:27:54.588Z",
+    "deleted": false
+  },
+  {
+    "id": "7a42ade9-36d0-46e0-aa2a-12f9e245b1f4",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "timestamp": "2025-08-16T04:57:08.184Z",
+    "deleted": false
+  },
+  {
+    "id": "35fb45e0-5d08-4784-bb16-7bedb30edd9b",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "",
+    "attachment": "/uploads/d583edcb-23f5-442c-b64c-76fc2bea1a80.mp4",
+    "timestamp": "2025-08-16T06:13:38.847Z"
+  },
+  {
+    "id": "688c44b2-213b-408f-a272-db0c36214116",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "attachment": null,
+    "timestamp": "2025-08-16T06:54:05.055Z"
+  },
+  {
+    "id": "18a4c64a-29dc-4679-8154-ac732803003a",
+    "user": {
+      "id": "24e3c583-ced3-4b82-a2b2-bb8d3aa41c9f",
+      "login": "321",
+      "username": "321",
+      "description": "",
+      "avatar": null,
+      "createdAt": "2025-08-16T05:39:20.153Z"
+    },
+    "message": "",
+    "attachment": null,
+    "timestamp": "2025-08-17T02:00:18.968Z",
+    "edited": false,
+    "deleted": true
+  },
+  {
+    "id": "5e9262f1-1fcb-4a7d-b4dc-e01519110b1e",
+    "user": {
+      "id": "24e3c583-ced3-4b82-a2b2-bb8d3aa41c9f",
+      "login": "321",
+      "username": "321",
+      "description": "",
+      "avatar": null,
+      "createdAt": "2025-08-16T05:39:20.153Z"
+    },
+    "message": "1234",
+    "attachment": null,
+    "timestamp": "2025-08-17T02:00:35.502Z",
+    "edited": true,
+    "deleted": false
+  },
+  {
+    "id": "3cca27a8-7a0e-4f52-8ff8-0099368d4216",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "attachment": null,
+    "timestamp": "2025-08-17T03:19:35.775Z",
+    "edited": false,
+    "deleted": false
+  },
+  {
+    "id": "f329619d-8fba-460c-a086-f8b7653af2e5",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "",
+    "attachment": null,
+    "timestamp": "2025-08-17T03:44:47.024Z",
+    "edited": true,
+    "deleted": true,
+    "type": "user",
+    "editedTimestamp": "2025-08-17T03:45:13.170Z"
+  },
+  {
+    "id": "efbafe90-60d2-4f18-9af9-360d4895c8df",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "attachment": null,
+    "timestamp": "2025-08-17T03:47:16.000Z",
+    "edited": false,
+    "deleted": false,
+    "type": "user"
+  },
+  {
+    "id": "b02aeb1c-0ed2-4663-a604-c829b48367b3",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "",
+    "attachment": null,
+    "timestamp": "2025-08-17T03:47:17.184Z",
+    "edited": false,
+    "deleted": true,
+    "type": "user"
+  },
+  {
+    "id": "fccab281-3996-4f5a-a771-19c24f3de82f",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "",
+    "attachment": null,
+    "timestamp": "2025-08-17T04:01:00.660Z",
+    "edited": false,
+    "deleted": true,
+    "type": "user"
+  },
+  {
+    "id": "9e4400d7-98dd-4433-8697-53da1fb81d30",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "",
+    "attachment": null,
+    "timestamp": "2025-08-17T04:01:10.770Z",
+    "edited": false,
+    "deleted": true,
+    "type": "user"
+  },
+  {
+    "id": "91d07003-7695-4516-9125-998a3986ced3",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "Привет. Давай дружить. Как дела?",
+    "attachment": null,
+    "timestamp": "2025-08-17T04:03:38.878Z",
+    "edited": true,
+    "deleted": false,
+    "type": "user",
+    "editedTimestamp": "2025-08-17T04:22:52.747Z"
+  },
+  {
+    "id": "75d01748-e22f-465e-98e2-820f15723f76",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "",
+    "attachment": "/uploads/8a3f47ed-37d5-4095-9d89-c84607224703.mp4",
+    "timestamp": "2025-08-17T04:39:52.135Z",
+    "edited": false,
+    "deleted": false,
+    "type": "user"
+  },
+  {
+    "id": "928d569d-b0a5-4c43-a6e7-808874281296",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "😅",
+    "attachment": null,
+    "timestamp": "2025-08-17T05:03:05.453Z",
+    "edited": false,
+    "deleted": false,
+    "type": "user"
+  },
+  {
+    "id": "61bfd57d-f98d-4de5-9ad8-47a9b82b6cfe",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "😅",
+    "attachment": null,
+    "timestamp": "2025-08-17T17:46:16.491Z",
+    "edited": false,
+    "deleted": false,
+    "type": "user"
+  },
+  {
+    "id": "038ff257-e4de-4725-9401-a2d6953a0e97",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "🚩",
+    "attachment": null,
+    "timestamp": "2025-08-17T17:46:49.483Z",
+    "edited": false,
+    "deleted": false,
+    "type": "user"
+  },
+  {
+    "id": "d77315bc-2580-48f0-bd36-6ffe0153ecc1",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "👍🏻",
+    "attachment": null,
+    "timestamp": "2025-08-17T17:47:01.391Z",
+    "edited": false,
+    "deleted": false,
+    "type": "user"
+  }
+]

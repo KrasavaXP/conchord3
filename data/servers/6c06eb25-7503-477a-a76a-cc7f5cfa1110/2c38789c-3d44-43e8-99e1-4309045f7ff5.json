@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ddeedeec-9453-4bac-ac97-3eeb6c88c4d3",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "timestamp": "2025-08-15T22:10:07.908Z",
+    "deleted": false
+  },
+  {
+    "id": "eddd30ff-4eb2-4e79-ae8a-3425389083f4",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "1234",
+      "description": "",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "timestamp": "2025-08-15T22:56:21.953Z",
+    "deleted": false
+  },
+  {
+    "id": "cc29e373-1019-4888-8bdb-e7a9ae2874ec",
+    "user": {
+      "id": "595e607a-795b-4722-91b7-72205e5a17e8",
+      "login": "1234",
+      "username": "12345",
+      "description": "",
+      "avatar": null,
+      "createdAt": "2025-08-15T23:06:30.805Z"
+    },
+    "message": "123",
+    "timestamp": "2025-08-16T04:29:43.493Z",
+    "deleted": false
+  }
+]

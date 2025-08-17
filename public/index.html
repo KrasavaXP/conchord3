@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Клон Discord</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+</head>
+<body>
+    <!-- Контейнер для динамических модальных окон -->
+    <div id="modal-container"></div>
+
+    <!-- Контейнер для звуков -->
+    <div id="audio-container">
+        <audio id="join-sound" src="/assets/join.mp3" preload="auto"></audio>
+        <audio id="leave-sound" src="/assets/leave.mp3" preload="auto"></audio>
+        <audio id="notification-sound" src="/assets/notification.mp3" preload="auto"></audio>
+    </div>
+
+    <div id="drag-overlay" class="hidden">
+        <div class="drag-content">
+            <div class="drag-icon"></div>
+            <h2>Режим моментальной отправки!</h2>
+            <p>Перетащите файлы в <span id="drag-channel-name">#канал</span></p>
+        </div>
+    </div>
+
+    <!-- Экран аутентификации -->
+    <div id="auth-screen">
+        <div id="auth-box">
+            <div id="login-view">
+                <h2>С возвращением!</h2>
+                <p class="welcome-text">Мы так рады вас снова видеть!</p>
+                <form id="login-form">
+                    <div class="form-group"><label for="login-email">Логин <span class="required-star">*</span></label><input type="text" id="login-email" required></div>
+                    <div class="form-group"><label for="login-password">Пароль <span class="required-star">*</span></label><input type="password" id="login-password" required></div>
+                    <button type="submit">Вход</button>
+                </form>
+                <p class="switch-form-text">Нужен аккаунт? <a href="#" id="show-register">Зарегистрироваться</a></p>
+                <p id="login-message" class="message"></p>
+            </div>
+            <div id="register-view" class="hidden">
+                <h2>Создать аккаунт</h2>
+                <form id="register-form">
+                    <div class="form-group"><label for="reg-email">Логин</label><input type="text" id="reg-email" required></div>
+                    <div class="form-group"><label for="reg-username">Имя пользователя (Ник )</label><input type="text" id="reg-username" required></div>
+                    <div class="form-group"><label for="reg-password">Пароль</label><input type="password" id="reg-password" required></div>
+                    <button type="submit">Продолжить</button>
+                </form>
+                <p class="switch-form-text">Уже есть аккаунт? <a href="#" id="show-login">Войти</a></p>
+                <p id="register-message" class="message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной интерфейс приложения -->
+    <div id="main-app" class="hidden">
+        <nav class="servers-column">
+            <div class="server-icon home-icon" id="home-btn">
+                <div class="pill"></div>
+                <i class="fa-brands fa-discord"></i>
+            </div>
+            <hr class="separator">
+            <div id="servers-list"></div>
+            <div class="server-icon action-icon" id="add-server-btn"><i class="fa-solid fa-plus"></i></div>
+            <div class="server-icon action-icon" id="explore-servers-btn"><i class="fa-solid fa-compass"></i></div>
+        </nav>
+
+        <div class="channels-column">
+            <header id="server-header">
+                <h1 id="server-name-header">Выберите сервер</h1>
+                <div id="server-options-dropdown" class="hidden">
+                    <i class="fa-solid fa-chevron-down"></i>
+                    <div class="dropdown-content">
+                        <a href="#" id="server-settings-btn"><i class="fa-solid fa-server"></i> Настройки сервера</a>
+                    </div>
+                </div>
+            </header>
+            <div class="channels-list" id="channels-container"></div>
+            <div class="voice-status-panel hidden" id="voice-status-panel">
+                <div class="voice-info">
+                    <span class="status-text"><i class="fa-solid fa-wifi"></i> Голосовая связь</span>
+                    <span class="channel-name-status"></span>
+                </div>
+                <button class="disconnect-btn" id="disconnect-voice-btn" title="Отключиться"><i class="fa-solid fa-phone-slash"></i></button>
+            </div>
+            <footer class="user-panel">
+                <div class="user-avatar" id="panel-avatar"></div>
+                <div class="user-info"><span id="panel-username"></span></div>
+                <div class="user-actions">
+                    <i class="fa-solid fa-microphone" id="mic-btn" title="Выключить микрофон"></i>
+                    <i class="fa-solid fa-headphones" id="deafen-btn" title="Выключить звук"></i>
+                    <i class="fa-solid fa-gear" id="settings-btn" title="Настройки"></i>
+                </div>
+            </footer>
+        </div>
+
+        <main class="main-content-column">
+            <header class="channel-header">
+                <div class="channel-name">
+                    <i class="fa-solid fa-hashtag" id="header-icon"></i>
+                    <span id="channel-name-header"></span>
+                </div>
+                <div class="header-actions">
+                    <i class="fa-solid fa-user-group" id="members-toggle-btn" title="Показать список участников"></i>
+                </div>
+            </header>
+            <div class="content-area">
+                <div id="text-channel-view" class="channel-view hidden">
+                    <div class="messages-container" id="text-messages-list"></div>
+                    <div class="chat-input-area">
+                        <form id="text-chat-form">
+                            <div class="chat-input-wrapper">
+                                <button type="button" class="attach-btn" id="attach-file-btn" title="Прикрепить файл"><i class="fa-solid fa-plus"></i></button>
+                                <input type="file" id="file-upload-input" class="hidden" accept="image/*,video/*,.pdf,.doc,.docx,.txt" multiple>
+                                <input type="text" placeholder="Написать в #канал..." id="text-chat-input" autocomplete="off">
+                                <div id="emoji-picker-container" class="hidden">
+                                    <emoji-picker></emoji-picker>
+                                </div>
+                                <button type="button" class="emoji-btn" id="emoji-btn" title="Открыть эмодзи"><i class="fa-regular fa-face-smile"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="voice-channel-view" class="channel-view hidden">
+                    <div id="video-grid"></div>
+                    <div class="voice-controls">
+                        <button id="vc-camera-btn" class="control-btn" title="Включить камеру"><i class="fa-solid fa-video"></i></button>
+                        <button id="vc-screen-btn" class="control-btn" title="Демонстрация экрана"><i class="fa-solid fa-desktop"></i></button>
+                        <button id="vc-mic-btn" class="control-btn active" title="Выключить микрофон"><i class="fa-solid fa-microphone"></i></button>
+                        <button id="vc-leave-btn" class="control-btn leave" title="Отключиться"><i class="fa-solid fa-phone-slash"></i></button>
+                    </div>
+                </div>
+                <div id="voice-disconnected-view" class="channel-view hidden">
+                    <div class="disconnected-content">
+                        <h3 id="disconnected-channel-name">Лобби</h3>
+                        <p>Вы покинули голосовой канал.</p>
+                        <button id="reconnect-voice-btn">Присоединиться</button>
+                    </div>
+                </div>
+                <div id="placeholder-view" class="channel-view">
+                    <div class="placeholder-content">
+                        <div id="welcome-content">
+                            <h2 id="placeholder-title">Добро пожаловать!</h2>
+                            <div id="placeholder-text">Выберите сервер или друга в списке слева.</div>
+                        </div>
+                        <div id="explore-content" class="hidden">
+                            <div class="explore-header">
+                                <h3>Найдите свое сообщество</h3>
+                                <p>От игровых и музыкальных до учебных и научных — здесь вы найдете свое место.</p>
+                            </div>
+                            <div class="explore-join-bar">
+                                <h4>Уже есть приглашение?</h4>
+                                <form id="explore-join-server-form">
+                                    <input type="text" id="explore-invite-code" placeholder="Код приглашения" required>
+                                    <button type="submit" class="join-btn">Присоединиться к серверу</button>
+                                </form>
+                            </div>
+                            <h4>Рекомендуемые сообщества</h4>
+                            <div class="explore-filter-buttons">
+                                <button class="filter-btn active" data-filter="all"><i class="fa-solid fa-star"></i>Все</button>
+                                <button class="filter-btn" data-filter="games"><i class="fa-solid fa-gamepad"></i>Игры</button>
+                                <button class="filter-btn" data-filter="music"><i class="fa-solid fa-music"></i>Музыка</button>
+                                <button class="filter-btn" data-filter="movies"><i class="fa-solid fa-film"></i>Фильмы</button>
+                            </div>
+                            <div id="explore-servers-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="right-sidebar hidden" id="members-sidebar">
+            <header><h3>Участники</h3></header>
+            <div id="members-list-container"></div>
+        </aside>
+    </div>
+
+    <!-- Модальное окно создания сервера -->
+    <div id="create-server-modal-backdrop" class="modal-backdrop hidden">
+        <div class="create-server-modal">
+            <button class="close-modal-btn" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-step active" data-step="1">
+                <h2 class="modal-title">Создание сервера</h2>
+                <p class="modal-subtitle">Ваш сервер — это место, где вы можете проводить время с друзьями.</p>
+                <div class="template-options">
+                    <div class="template-option" data-template="games" data-next-step="2"><i class="fa-solid fa-gamepad"></i><span>Игры</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="template-option" data-template="music" data-next-step="2"><i class="fa-solid fa-music"></i><span>Музыка</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="template-option" data-template="movies" data-next-step="2"><i class="fa-solid fa-film"></i><span>Фильмы и сериалы</span><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+            </div>
+            <div class="modal-step" data-step="2">
+                <h2 class="modal-title">Расскажите о своем сервере</h2>
+                <p class="modal-subtitle">Чтобы помочь вам с настройкой, ответьте: ваш сервер будет для друзей или для большого сообщества?</p>
+                <div class="template-options">
+                    <div class="template-option" data-type="private" data-next-step="3"><i class="fa-solid fa-user-group"></i><span>Для друзей</span><i class="fa-solid fa-chevron-right"></i></div>
+                    <div class="template-option" data-type="public" data-next-step="3"><i class="fa-solid fa-earth-americas"></i><span>Для сообщества</span><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-button back-btn" data-prev-step="1">Назад</button>
+                </div>
+            </div>
+            <div class="modal-step" data-step="3">
+                <h2 class="modal-title">Персонализируйте свой сервер</h2>
+                <p class="modal-subtitle">Выберите название и значок. Их можно будет изменить в любой момент.</p>
+                <form id="create-server-form">
+                    <div class="server-avatar-uploader large">
+                        <div class="server-avatar-preview large" id="create-server-avatar-preview">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Загрузить</span>
+                        </div>
+                        <input type="file" id="create-server-avatar-input" accept="image/*" class="hidden">
+                    </div>
+                    <div class="form-group">
+                        <label for="server-name">ИМЯ СЕРВЕРА</label>
+                        <input type="text" id="server-name" name="serverName" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="modal-button back-btn" data-prev-step="2">Назад</button>
+                        <button type="submit" class="modal-button create-btn">Создать</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно настроек пользователя -->
+    <div id="settings-modal-backdrop" class="modal-backdrop hidden">
+        <div class="settings-modal">
+            <div class="settings-sidebar">
+                <div class="settings-menu">
+                    <div class="settings-menu-header">Настройки пользователя</div>
+                    <a href="#" class="settings-menu-item active" data-section="profile">Моя учетная запись</a>
+                    <a href="#" class="settings-menu-item" data-section="password">Пароль и аутентификация</a>
+                    <div class="settings-menu-divider"></div>
+                    <a href="#" class="settings-menu-item disabled" data-section="privacy">Приватность</a>
+                    <a href="#" class="settings-menu-item disabled" data-section="devices">Устройства</a>
+                </div>
+            </div>
+            <div class="settings-content">
+                <button class="close-modal-btn" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+                <!-- Секция профиля -->
+                <div class="settings-section active" id="settings-profile-section">
+                    <h2>Моя учетная запись</h2>
+                    <div class="profile-card">
+                        <div class="profile-banner" id="profile-banner-preview"><button class="change-banner-btn">Изменить баннер</button></div>
+                        <div class="profile-header">
+                            <div class="profile-avatar-wrapper">
+                                <div class="profile-avatar" id="settings-avatar"></div>
+                                <button class="change-avatar-btn"><i class="fa-solid fa-pen"></i></button>
+                                <input type="file" id="avatar-upload-input" class="hidden" accept="image/*">
+                            </div>
+                            <div class="profile-username" id="settings-username"></div>
+                        </div>
+                        <div class="profile-body">
+                            <div class="profile-info-section">
+                                <h3>ИМЯ ПОЛЬЗОВАТЕЛЯ</h3>
+                                <div class="username-edit-container">
+                                    <input type="text" id="username-edit-input" readonly>
+                                    <button id="username-edit-btn">Изменить</button>
+                                </div>
+                            </div>
+                            <div class="profile-info-section">
+                                <h3>ОБО МНЕ</h3>
+                                <textarea id="profile-description" placeholder="Расскажите всем о себе!"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Секция пароля -->
+                <div class="settings-section" id="settings-password-section">
+                    <h2>Пароль и аутентификация</h2>
+                    <button id="open-change-password-btn" class="modal-button create-btn">Сменить пароль</button>
+                </div>
+                <!-- Футер с кнопками сохранения -->
+                <div class="settings-footer hidden" id="save-notice">
+                    <p class="save-notice-text">Осторожно, у вас есть несохраненные изменения!</p>
+                    <div class="footer-buttons">
+                        <button class="modal-button back-btn" id="reset-settings-btn">Сбросить</button>
+                        <button class="modal-button create-btn" id="save-settings-btn">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно смены пароля -->
+    <div id="change-password-modal-backdrop" class="modal-backdrop hidden">
+        <div class="change-password-modal">
+            <button class="close-modal-btn" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-title">Обновите пароль</h2>
+            <p class="modal-subtitle">Введите текущий и новый пароли.</p>
+            <form id="change-password-form">
+                <div class="form-group">
+                    <label for="current-password">ТЕКУЩИЙ ПАРОЛЬ <span class="required-star">*</span></label>
+                    <input type="password" id="current-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">НОВЫЙ ПАРОЛЬ <span class="required-star">*</span></label>
+                    <input type="password" id="new-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">ПОДТВЕРЖДЕНИЕ НОВОГО ПАРОЛЯ <span class="required-star">*</span></label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                <p id="password-change-message" class="message"></p>
+                <div class="modal-actions">
+                    <button type="button" class="modal-button back-btn" id="cancel-password-change-btn" data-close-modal>Отмена</button>
+                    <button type="submit" class="modal-button create-btn">Готово</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно настроек СЕРВЕРА -->
+    <div id="server-settings-modal-backdrop" class="modal-backdrop hidden">
+        <div class="settings-modal server-settings">
+            <div class="settings-sidebar">
+                <div id="server-settings-menu-header" class="settings-menu-header">Настройки сервера</div>
+                <div class="settings-menu">
+                    <a href="#" class="settings-menu-item active" data-section="overview">Обзор</a>
+                    <a href="#" class="settings-menu-item" data-section="roles">Роли</a>
+                    <a href="#" class="settings-menu-item" data-section="invites">Кодовое слово</a>
+                    <a href="#" class="settings-menu-item" data-section="members">Участники</a>
+                    <div class="settings-menu-divider"></div>
+                    <a href="#" id="delete-server-btn" class="settings-menu-item delete-server">Удалить сервер</a>
+                </div>
+                <div class="settings-menu-footer">
+                    <button class="close-server-settings-btn" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="settings-content">
+                <div class="settings-section active" id="settings-overview-section">
+                    <h2>Обзор сервера</h2>
+                    <div class="server-overview-header">
+                        <div class="server-avatar-uploader">
+                            <div class="server-avatar-preview" id="server-settings-avatar-preview"></div>
+                            <button class="upload-btn">Загрузить</button>
+                            <input type="file" id="server-settings-avatar-input" class="hidden" accept="image/*">
+                        </div>
+                        <div class="server-overview-fields">
+                            <div class="form-group"><label for="server-settings-name">ИМЯ СЕРВЕРА</label><input type="text" id="server-settings-name"></div>
+                            <div class="form-group"><label for="server-settings-type">ТИП СЕРВЕРА</label><select id="server-settings-type"><option value="public">Открытый</option><option value="private">Закрытый</option></select></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="server-settings-description">ОПИСАНИЕ СЕРВЕРА</label>
+                        <textarea id="server-settings-description" placeholder="Расскажите о вашем сервере, чтобы люди знали, о чем он."></textarea>
+                    </div>
+                </div>
+
+                <div class="settings-section" id="settings-roles-section">
+                    <h2>Роли</h2>
+                    <div class="roles-layout">
+                        <div class="roles-list-panel">
+                            <div class="roles-list-header">
+                                <span>Роли</span>
+                                <button id="create-role-btn" title="Создать роль"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                            <div id="roles-list-container"></div>
+                        </div>
+                        <div class="role-edit-panel">
+                            <div id="role-edit-placeholder">Выберите роль для редактирования</div>
+                            <div id="role-edit-content" class="hidden">
+                                <div class="form-group"><label for="role-name-input">НАЗВАНИЕ РОЛИ</label><input type="text" id="role-name-input"></div>
+                                <div class="permissions-grid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section" id="settings-invites-section">
+                    <h2>Кодовое слово</h2>
+                    <p>Это постоянный код для входа на ваш сервер. Любой, у кого он есть, сможет присоединиться.</p>
+                    <div class="invite-item-wrapper">
+                        <input type="text" id="current-invite-code" readonly>
+                        <button id="copy-invite-code-btn" title="Копировать"><i class="fa-solid fa-copy"></i></button>
+                    </div>
+                    <button id="generate-invite-btn" class="modal-button create-btn">Сгенерировать новый код</button>
+                </div>
+
+                <div class="settings-section" id="settings-members-section">
+                    <h2>Участники</h2>
+                    <div id="server-members-list-container"></div>
+                </div>
+
+                <div class="settings-footer hidden" id="server-save-notice">
+                    <p class="save-notice-text">Осторожно, у вас есть несохраненные изменения!</p>
+                    <div class="footer-buttons">
+                         <button class="modal-button back-btn" id="reset-server-settings-btn">Сбросить</button>
+                         <button class="modal-button create-btn" id="save-server-settings-btn">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания канала -->
+    <div id="create-channel-modal-backdrop" class="modal-backdrop hidden">
+        <div class="create-channel-modal">
+            <button class="close-modal-btn" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal-title">Создать канал</h2>
+            <p class="modal-subtitle" id="create-channel-subtitle">в Текстовые каналы</p>
+            <form id="create-channel-form">
+                <div class="form-group">
+                    <label>ТИП КАНАЛА</label>
+                    <div class="channel-type-selector">
+                        <label class="type-option">
+                            <input type="radio" name="channelType" value="text" checked>
+                            <i class="fa-solid fa-hashtag"></i>
+                            <div class="type-details">
+                                <strong>Текст</strong>
+                                <span>Отправляйте сообщения, изображения, GIF, эмодзи, мнения и приколы</span>
+                            </div>
+                        </label>
+                        <label class="type-option">
+                            <input type="radio" name="channelType" value="voice">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <div class="type-details">
+                                <strong>Голос</strong>
+                                <span>Общайтесь голосом или в видеочате и пользуйтесь функцией показа экрана</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="channel-name-input">НАЗВАНИЕ КАНАЛА</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-hashtag"></i>
+                        <input type="text" id="channel-name-input" name="channelName" placeholder="новый-канал" required>
+                    </div>
+                </div>
+                <div class="form-group privacy-toggle">
+                    <i class="fa-solid fa-lock"></i>
+                    <div class="privacy-details">
+                        <strong>Приватный канал</strong>
+                        <span>Только выбранные участники смогут его видеть.</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" name="private"><span class="slider"></span></label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-button back-btn" data-close-modal>Отмена</button>
+                    <button type="submit" class="modal-button create-btn">Создать канал</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно просмотра профиля пользователя -->
+    <div id="user-profile-modal-backdrop" class="modal-backdrop hidden">
+        <div class="user-profile-modal">
+            <button class="close-modal-btn" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+            <div class="profile-card">
+                <div class="profile-banner" id="profile-modal-banner"></div>
+                <div class="profile-header">
+                    <div class="profile-avatar-wrapper">
+                        <div class="profile-avatar large" id="profile-modal-avatar"></div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <h2 class="profile-username" id="profile-modal-username"></h2>
+                    <div class="profile-info-section">
+                        <h3>ОБО МНЕ</h3>
+                        <p id="profile-modal-description">Здесь пока ничего нет.</p>
+                    </div>
+                    <div class="profile-info-section">
+                        <h3>УЧАСТНИК С</h3>
+                        <p id="profile-modal-created-at"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

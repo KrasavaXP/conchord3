@@ -1,0 +1,120 @@
+{
+  "id": "20cd99d2-747d-4d04-bdb3-2adf33788491",
+  "name": "563214",
+  "ownerId": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+  "type": "public",
+  "template": "games",
+  "avatar": null,
+  "description": "",
+  "members": [
+    {
+      "userId": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "roles": [
+        "owner"
+      ]
+    },
+    {
+      "userId": "24e3c583-ced3-4b82-a2b2-bb8d3aa41c9f",
+      "roles": [
+        "member"
+      ]
+    },
+    {
+      "userId": "595e607a-795b-4722-91b7-72205e5a17e8",
+      "roles": [
+        "member"
+      ]
+    }
+  ],
+  "channels": {
+    "text": [
+      {
+        "id": "c33faafd-46d8-4c7d-8ad5-8d1c94c3e333",
+        "name": "общий",
+        "private": false
+      },
+      {
+        "id": "e81f67f9-cebb-43fb-9584-551adbac39aa",
+        "name": "анонсы",
+        "private": false
+      },
+      {
+        "id": "82efab7c-0ef6-47d8-ae38-5da81961ac46",
+        "name": "поиск-пати",
+        "private": false
+      },
+      {
+        "id": "89aaee42-1fa3-4dd9-8f6d-bb45457cb535",
+        "name": "123",
+        "private": false
+      },
+      {
+        "id": "5357432b-f97c-435f-9f66-52d6eda2b9f9",
+        "name": "123",
+        "private": false
+      },
+      {
+        "id": "d7830b06-ee5c-45e8-81c7-7125e91cae41",
+        "name": "123",
+        "private": false
+      },
+      {
+        "id": "72546dc1-9e80-48c1-98bf-b78c3d4e8b5b",
+        "name": "1234",
+        "private": false
+      },
+      {
+        "id": "1233f9cf-95fc-4a51-9d61-b8e4023cf068",
+        "name": "123",
+        "private": false
+      }
+    ],
+    "voice": [
+      {
+        "id": "5ff2e1a5-554c-4a58-8c1e-d2beaff41c4e",
+        "name": "Лобби",
+        "private": false
+      },
+      {
+        "id": "510aa72a-9103-4f92-b9c1-f65cef728d8b",
+        "name": "Игровая 1",
+        "private": false
+      },
+      {
+        "id": "224cd054-e4a7-47bc-9999-2fbf7b2a955f",
+        "name": "Игровая 2",
+        "private": false
+      },
+      {
+        "id": "79810535-9170-442e-bf52-5c75928f9c51",
+        "name": "123",
+        "private": false
+      }
+    ]
+  },
+  "roles": [
+    {
+      "id": "owner",
+      "name": "Владелец",
+      "permissions": [
+        "all"
+      ],
+      "position": 999
+    },
+    {
+      "id": "member",
+      "name": "Участник",
+      "permissions": [],
+      "position": 0
+    }
+  ],
+  "invites": [
+    {
+      "code": "aff60a95",
+      "uses": 2,
+      "maxUses": 0,
+      "creatorId": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a"
+    }
+  ],
+  "createdAt": "2025-08-16T04:11:16.428Z"
+}

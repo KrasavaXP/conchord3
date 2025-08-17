@@ -1,0 +1,16 @@
+[
+  {
+    "id": "d1981287-8a2e-4a2e-85c0-bd7b1141f556",
+    "user": {
+      "id": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "login": "123",
+      "username": "123",
+      "description": "123",
+      "avatar": null,
+      "createdAt": "2025-08-15T21:47:36.618Z"
+    },
+    "message": "123",
+    "timestamp": "2025-08-16T04:58:13.438Z",
+    "deleted": false
+  }
+]

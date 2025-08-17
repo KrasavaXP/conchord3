@@ -1,0 +1,79 @@
+{
+  "id": "a4f7c5c4-e7e3-42c1-b3fb-cab4b16e4c6a",
+  "name": "123",
+  "ownerId": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+  "type": "private",
+  "template": "games",
+  "avatar": null,
+  "description": "",
+  "banner": null,
+  "members": [
+    {
+      "userId": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a",
+      "roles": [
+        "owner"
+      ]
+    }
+  ],
+  "channels": {
+    "text": [
+      {
+        "id": "fdef6b4b-7238-4442-8ad9-c4d8e95d936c",
+        "name": "общий",
+        "private": false
+      },
+      {
+        "id": "6613275c-5c77-4783-9439-8b0af60f3f07",
+        "name": "анонсы",
+        "private": false
+      },
+      {
+        "id": "bc2d9728-1c84-4329-997a-1a45fa3dfa54",
+        "name": "поиск-пати",
+        "private": false
+      }
+    ],
+    "voice": [
+      {
+        "id": "e99d517c-b4f5-4544-afca-49736be088a6",
+        "name": "Лобби",
+        "private": false
+      },
+      {
+        "id": "a8d87619-19be-4891-90c3-a70012c5e1f9",
+        "name": "Игровая 1",
+        "private": false
+      },
+      {
+        "id": "95bafb1b-2790-411d-9bac-c2c26f1ac773",
+        "name": "Игровая 2",
+        "private": false
+      }
+    ]
+  },
+  "roles": [
+    {
+      "id": "owner",
+      "name": "Владелец",
+      "permissions": [
+        "all"
+      ],
+      "position": 999
+    },
+    {
+      "id": "member",
+      "name": "Участник",
+      "permissions": [],
+      "position": 0
+    }
+  ],
+  "invites": [
+    {
+      "code": "6ef7b293",
+      "uses": 0,
+      "maxUses": 0,
+      "creatorId": "636b75c8-238b-4b8d-9cb3-24c31a3aad9a"
+    }
+  ],
+  "createdAt": "2025-08-17T17:47:49.912Z"
+}
